@@ -11,14 +11,15 @@ const cssLinks = [...html.matchAll(/<link[^>]+rel=["']stylesheet["'][^>]+href=["
 for (const [tag, href] of cssLinks) {
   const cssPath = join(distDir, href.replace(/^\//, ""));
   const css = await readFile(cssPath, "utf8");
-  html = html.replace(tag, `<style>${css}</style>`);
+  html = html.replace(tag, () => `<style>${css}</style>`);
 }
 
 const scripts = [...html.matchAll(/<script([^>]*)src=["']([^"']+)["']([^>]*)><\/script>/gi)];
 for (const [tag, , src] of scripts) {
   const scriptPath = join(distDir, src.replace(/^\//, ""));
   const js = await readFile(scriptPath, "utf8");
-  html = html.replace(tag, `<script type="module">${js}</script>`);
+  const safeJs = js.replace(/<\/script/gi, "<\\/script");
+  html = html.replace(tag, () => `<script type="module">${safeJs}</script>`);
 }
 
 html = html.replace(/\s*<link[^>]+rel=["']modulepreload["'][^>]*>/gi, "");
