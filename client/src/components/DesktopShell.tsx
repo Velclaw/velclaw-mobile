@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Bell,
   ChevronDown,
@@ -33,12 +33,30 @@ const navItems: Array<{ route: WebRoute; label: string; hint: string; icon: type
 ];
 
 export default function DesktopShell({ route, onNavigate, children }: DesktopShellProps) {
-  const [advancedMenuOpen, setAdvancedMenuOpen] = useState(false);
+  const [menuPhase, setMenuPhase] = useState<"closed" | "enter" | "open" | "exit">("closed");
+  const closeTimer = useRef<number | null>(null);
+  const advancedMenuOpen = menuPhase !== "closed";
+
+  const openAdvancedMenu = () => {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    setMenuPhase("enter");
+    window.requestAnimationFrame(() => setMenuPhase("open"));
+  };
+
+  const closeAdvancedMenu = () => {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    setMenuPhase("exit");
+    closeTimer.current = window.setTimeout(() => setMenuPhase("closed"), 220);
+  };
+
+  useEffect(() => () => {
+    if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+  }, []);
 
   useEffect(() => {
     if (!advancedMenuOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setAdvancedMenuOpen(false);
+      if (event.key === "Escape") closeAdvancedMenu();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -118,7 +136,7 @@ export default function DesktopShell({ route, onNavigate, children }: DesktopShe
               type="button"
               aria-label={advancedMenuOpen ? "Close advanced options" : "Open advanced options"}
               aria-expanded={advancedMenuOpen}
-              onClick={() => setAdvancedMenuOpen((open) => !open)}
+              onClick={advancedMenuOpen ? closeAdvancedMenu : openAdvancedMenu}
             >
               {advancedMenuOpen ? <X size={19} /> : <Menu size={19} />}
             </button>
@@ -126,19 +144,19 @@ export default function DesktopShell({ route, onNavigate, children }: DesktopShe
         </header>
         {advancedMenuOpen && (
           <>
-            <button className="mobile-menu-backdrop" type="button" aria-label="Close advanced options" onClick={() => setAdvancedMenuOpen(false)} />
-            <aside className="mobile-advanced-menu" aria-label="Advanced workspace options">
+            <button className={`mobile-menu-backdrop ${menuPhase}`} type="button" aria-label="Close advanced options" onClick={closeAdvancedMenu} />
+            <aside className={`mobile-advanced-menu ${menuPhase}`} aria-label="Advanced workspace options">
               <div className="mobile-menu-header">
                 <div><span className="panel-overline">ADVANCED OPTIONS</span><strong>Workspace controls</strong></div>
-                <button className="icon-button" type="button" aria-label="Close menu" onClick={() => setAdvancedMenuOpen(false)}><X size={17} /></button>
+                <button className="icon-button" type="button" aria-label="Close menu" onClick={closeAdvancedMenu}><X size={17} /></button>
               </div>
-              <button className="mobile-menu-option" type="button" onClick={() => setAdvancedMenuOpen(false)}>
+              <button className="mobile-menu-option" type="button" onClick={() => closeAdvancedMenu()}>
                 <Search size={17} /><span><strong>Search workspace</strong><small>Find projects, files and reviews</small></span><kbd><Command size={10} /> K</kbd>
               </button>
-              <button className="mobile-menu-option" type="button" onClick={() => setAdvancedMenuOpen(false)}>
+              <button className="mobile-menu-option" type="button" onClick={() => closeAdvancedMenu()}>
                 <GitBranch size={17} /><span><strong>Branch</strong><small>main · synced 2m ago</small></span><ChevronDown size={15} />
               </button>
-              <button className="mobile-menu-option" type="button" onClick={() => setAdvancedMenuOpen(false)}>
+              <button className="mobile-menu-option" type="button" onClick={() => closeAdvancedMenu()}>
                 <Settings2 size={17} /><span><strong>Workspace settings</strong><small>Configure workspace preferences</small></span><ChevronDown size={15} />
               </button>
               <div className="mobile-menu-status"><CircleDot size={14} /><span><strong>Local preview healthy</strong><small>Velclaw Desktop Workspace</small></span></div>
