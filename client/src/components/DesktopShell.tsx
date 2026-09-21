@@ -150,13 +150,13 @@ export default function DesktopShell({ route, onNavigate, children }: DesktopShe
                 <div><span className="panel-overline">ADVANCED OPTIONS</span><strong>Workspace controls</strong></div>
                 <button className="icon-button" type="button" aria-label="Close menu" onClick={closeAdvancedMenu}><X size={17} /></button>
               </div>
-              <button className="mobile-menu-option" type="button" onClick={() => closeAdvancedMenu()}>
+              <button className="mobile-menu-option menu-option-1" type="button" onClick={() => closeAdvancedMenu()}>
                 <Search size={17} /><span><strong>Search workspace</strong><small>Find projects, files and reviews</small></span><kbd><Command size={10} /> K</kbd>
               </button>
-              <button className="mobile-menu-option" type="button" onClick={() => closeAdvancedMenu()}>
+              <button className="mobile-menu-option menu-option-2" type="button" onClick={() => closeAdvancedMenu()}>
                 <GitBranch size={17} /><span><strong>Branch</strong><small>main · synced 2m ago</small></span><ChevronDown size={15} />
               </button>
-              <button className="mobile-menu-option" type="button" onClick={() => closeAdvancedMenu()}>
+              <button className="mobile-menu-option menu-option-3" type="button" onClick={() => closeAdvancedMenu()}>
                 <Settings2 size={17} /><span><strong>Workspace settings</strong><small>Configure workspace preferences</small></span><ChevronDown size={15} />
               </button>
               <div className="mobile-menu-status"><CircleDot size={14} /><span><strong>Local preview healthy</strong><small>Velclaw Desktop Workspace</small></span></div>

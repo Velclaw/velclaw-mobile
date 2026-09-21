@@ -356,3 +356,20 @@ h1 em { color: var(--violet-light); font-style: normal; }
 @media (max-width: 380px) {
   .mobile-advanced-menu { top: 58px; right: 8px; width: calc(100vw - 16px); }
 }
+
+
+/* Sequential entrance for advanced mobile menu items. */
+@media (max-width: 700px) {
+  .mobile-menu-option { opacity: 0; transform: translateY(-7px); animation: mobile-menu-item-in .34s var(--ease-out) forwards; }
+  .menu-option-1 { animation-delay: .06s; }
+  .menu-option-2 { animation-delay: .12s; }
+  .menu-option-3 { animation-delay: .18s; }
+}
+@keyframes mobile-menu-item-in {
+  from { opacity: 0; transform: translateY(-7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-backdrop, .mobile-advanced-menu, .mobile-menu-option { transition: none !important; animation: none !important; }
+  .mobile-menu-option { opacity: 1; transform: none; }
+}
