@@ -27,6 +27,16 @@ const MAPPING = {
   "externaldrive.fill": "storage",
   "sparkles": "auto-awesome",
   "checkmark": "check",
+  "xmark": "close",
+  "lock.fill": "lock",
+  "globe": "public",
+  "arrow.triangle.branch": "account-tree",
+  "folder.fill": "folder",
+  "arrow.right": "arrow-forward",
+  "curlybraces": "data-object",
+  "doc.text.fill": "description",
+  "folder.badge.questionmark": "folder-off",
+  "arrow.up": "arrow-upward",
 } as IconMapping;
 
 /**

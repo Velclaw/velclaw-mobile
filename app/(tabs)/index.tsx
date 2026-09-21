@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
 
 import { ScreenContainer } from "@/components/screen-container";
 import { IconSymbol } from "@/components/ui/icon-symbol";
@@ -42,6 +43,7 @@ function triggerHaptic() {
 }
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [building, setBuilding] = useState(false);
   const [buildState, setBuildState] = useState<"ready" | "success">("ready");
   const [activePanel, setActivePanel] = useState<"overview" | "runtime">("overview");
@@ -158,6 +160,19 @@ export default function HomeScreen() {
               <Text style={styles.secondaryButtonText}>Preview</Text>
             </Pressable>
           </View>
+        </View>
+
+        <View style={styles.quickActions}>
+          <Pressable onPress={() => router.push("/projects")} style={({ pressed }) => [styles.quickAction, pressed && styles.pressed]}>
+            <IconSymbol name="folder.fill" size={17} color={COLORS.violetLight} />
+            <View><Text style={styles.quickActionTitle}>GitHub projects</Text><Text style={styles.quickActionMeta}>repo · branch</Text></View>
+            <IconSymbol name="chevron.right" size={16} color={COLORS.muted} />
+          </Pressable>
+          <Pressable onPress={() => router.push({ pathname: "/files", params: { owner: "velclaw", repo: "starter-vite-tsx", branch: "main" } })} style={({ pressed }) => [styles.quickAction, pressed && styles.pressed]}>
+            <IconSymbol name="doc.text.fill" size={17} color={COLORS.teal} />
+            <View><Text style={styles.quickActionTitle}>File explorer</Text><Text style={styles.quickActionMeta}>42 files · AI review</Text></View>
+            <IconSymbol name="chevron.right" size={16} color={COLORS.muted} />
+          </Pressable>
         </View>
 
         <View style={styles.sectionHeading}>
@@ -313,6 +328,10 @@ const styles = StyleSheet.create({
   primaryButtonText: { color: COLORS.background, fontSize: 13, fontWeight: "700" },
   secondaryButton: { height: 44, paddingHorizontal: 16, borderWidth: 1, borderColor: COLORS.lineStrong, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7 },
   secondaryButtonText: { color: COLORS.violetLight, fontSize: 13, fontWeight: "600" },
+  quickActions: { gap: 8, marginBottom: 28 },
+  quickAction: { backgroundColor: COLORS.surface, borderWidth: 1, borderColor: COLORS.line, padding: 12, flexDirection: "row", alignItems: "center", gap: 10 },
+  quickActionTitle: { color: COLORS.text, fontSize: 12, fontWeight: "600" },
+  quickActionMeta: { color: COLORS.muted, fontSize: 10, marginTop: 3 },
   sectionHeading: { flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 13 },
   sectionTitle: { color: COLORS.text, fontSize: 18, fontWeight: "600", letterSpacing: -0.3 },
   sectionCaption: { color: COLORS.muted, fontSize: 11, marginTop: 4 },

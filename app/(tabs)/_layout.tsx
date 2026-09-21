@@ -35,6 +35,27 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="projects"
+        options={{
+          title: "Projects",
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="folder.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="files"
+        options={{
+          title: "Files",
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="doc.text.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="review"
+        options={{
+          title: "AI Review",
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="sparkles" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }
