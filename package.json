@@ -7,7 +7,7 @@
     "dev": "concurrently -k \"pnpm dev:server\" \"pnpm dev:web\"",
     "dev:server": "cross-env NODE_ENV=development tsx watch server/_core/index.ts",
     "dev:web": "vite --host 0.0.0.0 --port ${VITE_PORT:-5173}",
-    "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build": "vite build && node scripts/inline-dist.mjs && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "test": "vitest run",
