@@ -15,7 +15,7 @@ const githubHeaders = (accessToken?: string) => ({
 const demoRepositories = [
   { id: 1, name: "starter-vite-tsx", fullName: "velclaw/starter-vite-tsx", private: false, language: "TypeScript", stars: 24, updatedAt: "2h ago" },
   { id: 2, name: "agent-core", fullName: "velclaw/agent-core", private: true, language: "Node.js", stars: 8, updatedAt: "yesterday" },
-  { id: 3, name: "velclaw-mobile", fullName: "velclaw/velclaw-mobile", private: true, language: "TypeScript", stars: 12, updatedAt: "3d ago" },
+  { id: 3, name: "velclaw-web", fullName: "velclaw/velclaw-web", private: true, language: "TypeScript", stars: 12, updatedAt: "3d ago" },
 ];
 
 const demoTree = [

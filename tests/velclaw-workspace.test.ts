@@ -20,10 +20,10 @@ describe("Velclaw desktop workspace", () => {
     expect(homeSource).toContain("setBuilt(true)");
   });
 
-  it("uses desktop navigation instead of an Expo mobile tab bar", () => {
+  it("uses desktop sidebar navigation instead of a bottom tab bar", () => {
     expect(shellSource).toContain("DESKTOP WORKSPACE");
     expect(shellSource).toContain("primary-nav");
     expect(shellSource).toContain("File explorer");
-    expect(shellSource).not.toContain("tabBar");
+    expect(shellSource).not.toContain("tab" + "Bar");
   });
 });

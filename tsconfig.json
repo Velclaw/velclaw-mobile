@@ -23,5 +23,5 @@
     }
   },
   "include": ["client/src", "server", "shared", "drizzle", "tests", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", ".expo", "app", "components", "hooks", "lib", "constants", "scripts"]
+  "exclude": ["node_modules", "dist"]
 }
