@@ -2,28 +2,28 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const screenPath = resolve(process.cwd(), "app/(tabs)/index.tsx");
-const screenSource = readFileSync(screenPath, "utf8");
+const homePath = resolve(process.cwd(), "client/src/pages/HomePage.tsx");
+const homeSource = readFileSync(homePath, "utf8");
+const shellSource = readFileSync(resolve(process.cwd(), "client/src/components/DesktopShell.tsx"), "utf8");
 
-describe("Velclaw workspace dashboard", () => {
+describe("Velclaw desktop workspace", () => {
   it("keeps the product surface and primary project visible", () => {
-    expect(screenSource).toContain("VELCLAW");
-    expect(screenSource).toContain("starter-vite-tsx");
-    expect(screenSource).toContain("Ship ideas, not setup.");
+    expect(homeSource).toContain("VELCLAW");
+    expect(homeSource).toContain("starter-vite-tsx");
+    expect(homeSource).toContain("Ship ideas, <em>not setup.</em>");
   });
 
-  it("exposes the build and preview actions", () => {
-    expect(screenSource).toContain("const runBuild = () =>");
-    expect(screenSource).toContain("const deployPreview = () =>");
-    expect(screenSource).toContain("Run build");
-    expect(screenSource).toContain("Preview");
-    expect(screenSource).toContain("setBuildState(\"success\")");
+  it("exposes build and preview actions", () => {
+    expect(homeSource).toContain("const runBuild = () =>");
+    expect(homeSource).toContain("Run build");
+    expect(homeSource).toContain("Preview");
+    expect(homeSource).toContain("setBuilt(true)");
   });
 
-  it("includes both overview and runtime workspace panels", () => {
-    expect(screenSource).toContain('useState<"overview" | "runtime">');
-    expect(screenSource).toContain("Workspace pulse");
-    expect(screenSource).toContain("terminal / preview");
-    expect(screenSource).toContain("Ship flow");
+  it("uses desktop navigation instead of an Expo mobile tab bar", () => {
+    expect(shellSource).toContain("DESKTOP WORKSPACE");
+    expect(shellSource).toContain("primary-nav");
+    expect(shellSource).toContain("File explorer");
+    expect(shellSource).not.toContain("tabBar");
   });
 });

@@ -1,29 +1,27 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": [
-      "node",
-      "nativewind/types"
-    ],
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["node", "vite/client"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@shared/*": [
-        "./shared/*"
-      ]
+      "@/*": ["client/src/*"],
+      "@shared/*": ["shared/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "nativewind-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["client/src", "server", "shared", "drizzle", "tests", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", ".expo", "app", "components", "hooks", "lib", "constants", "scripts"]
 }
