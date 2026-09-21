@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   Bell,
   ChevronDown,
@@ -9,9 +9,11 @@ import {
   Gauge,
   GitBranch,
   LayoutDashboard,
+  Menu,
   Search,
   Settings2,
   Sparkles,
+  X,
 } from "lucide-react";
 import type { WebRoute } from "@/lib/routes";
 
@@ -31,6 +33,22 @@ const navItems: Array<{ route: WebRoute; label: string; hint: string; icon: type
 ];
 
 export default function DesktopShell({ route, onNavigate, children }: DesktopShellProps) {
+  const [advancedMenuOpen, setAdvancedMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!advancedMenuOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setAdvancedMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [advancedMenuOpen]);
+
+  useEffect(() => {
+    document.body.classList.toggle("menu-is-open", advancedMenuOpen);
+    return () => document.body.classList.remove("menu-is-open");
+  }, [advancedMenuOpen]);
+
   return (
     <div className="app-frame">
       <aside className="sidebar">
@@ -95,8 +113,38 @@ export default function DesktopShell({ route, onNavigate, children }: DesktopShe
             <button className="topbar-icon" type="button" aria-label="Notifications"><Bell size={17} /><i /></button>
             <div className="topbar-divider" />
             <div className="topbar-branch"><GitBranch size={14} /><span>main</span><ChevronDown size={13} /></div>
+            <button
+              className="mobile-menu-trigger"
+              type="button"
+              aria-label={advancedMenuOpen ? "Close advanced options" : "Open advanced options"}
+              aria-expanded={advancedMenuOpen}
+              onClick={() => setAdvancedMenuOpen((open) => !open)}
+            >
+              {advancedMenuOpen ? <X size={19} /> : <Menu size={19} />}
+            </button>
           </div>
         </header>
+        {advancedMenuOpen && (
+          <>
+            <button className="mobile-menu-backdrop" type="button" aria-label="Close advanced options" onClick={() => setAdvancedMenuOpen(false)} />
+            <aside className="mobile-advanced-menu" aria-label="Advanced workspace options">
+              <div className="mobile-menu-header">
+                <div><span className="panel-overline">ADVANCED OPTIONS</span><strong>Workspace controls</strong></div>
+                <button className="icon-button" type="button" aria-label="Close menu" onClick={() => setAdvancedMenuOpen(false)}><X size={17} /></button>
+              </div>
+              <button className="mobile-menu-option" type="button" onClick={() => setAdvancedMenuOpen(false)}>
+                <Search size={17} /><span><strong>Search workspace</strong><small>Find projects, files and reviews</small></span><kbd><Command size={10} /> K</kbd>
+              </button>
+              <button className="mobile-menu-option" type="button" onClick={() => setAdvancedMenuOpen(false)}>
+                <GitBranch size={17} /><span><strong>Branch</strong><small>main · synced 2m ago</small></span><ChevronDown size={15} />
+              </button>
+              <button className="mobile-menu-option" type="button" onClick={() => setAdvancedMenuOpen(false)}>
+                <Settings2 size={17} /><span><strong>Workspace settings</strong><small>Configure workspace preferences</small></span><ChevronDown size={15} />
+              </button>
+              <div className="mobile-menu-status"><CircleDot size={14} /><span><strong>Local preview healthy</strong><small>Velclaw Desktop Workspace</small></span></div>
+            </aside>
+          </>
+        )}
         <main className="page-canvas">{children}</main>
       </section>
     </div>

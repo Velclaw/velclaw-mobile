@@ -323,3 +323,32 @@ h1 em { color: var(--violet-light); font-style: normal; }
   .metric-block > span, .metric-block > small { font-size: 7px; letter-spacing: .4px; }
   .topbar { padding-left: 10px; padding-right: 10px; }
 }
+
+
+.mobile-menu-trigger, .mobile-menu-backdrop, .mobile-advanced-menu { display: none; }
+
+@media (max-width: 700px) {
+  body.menu-is-open { overflow: hidden; }
+  .mobile-menu-trigger { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 5px; color: var(--text); background: var(--surface-2); }
+  .mobile-menu-trigger[aria-expanded="true"] { color: var(--violet-light); border-color: #62469a; background: var(--violet-soft); }
+  .mobile-menu-backdrop { position: fixed; inset: 0; z-index: 40; display: block; width: 100%; height: 100%; border: 0; background: #0009; cursor: default; }
+  .mobile-advanced-menu { position: fixed; top: 62px; right: 12px; z-index: 50; display: flex; flex-direction: column; width: min(350px, calc(100vw - 24px)); padding: 14px; border: 1px solid #49366d; border-radius: 10px; background: #15131d; box-shadow: 0 24px 70px #000b; }
+  .mobile-menu-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 2px 2px 13px; border-bottom: 1px solid var(--line); }
+  .mobile-menu-header > div { display: flex; flex-direction: column; gap: 5px; }
+  .mobile-menu-header strong { color: var(--text); font-size: 15px; font-weight: 700; }
+  .mobile-menu-header .icon-button { width: 30px; height: 30px; border-radius: 5px; }
+  .mobile-menu-option { display: flex; align-items: center; gap: 11px; width: 100%; min-height: 58px; padding: 10px 2px; border: 0; border-bottom: 1px solid var(--line-soft); color: var(--violet-light); background: transparent; text-align: left; }
+  .mobile-menu-option:hover { color: var(--text); }
+  .mobile-menu-option > span { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .mobile-menu-option strong { color: var(--text); font-size: 11px; font-weight: 700; }
+  .mobile-menu-option small { color: var(--muted); font-size: 9px; line-height: 1.4; }
+  .mobile-menu-option kbd { margin-left: auto; }
+  .mobile-menu-status { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px; border: 1px solid #2c5e56; border-radius: 6px; color: var(--teal); background: #10231f; }
+  .mobile-menu-status span { display: flex; flex-direction: column; gap: 3px; }
+  .mobile-menu-status strong { color: var(--text); font-size: 10px; }
+  .mobile-menu-status small { color: var(--muted); font-size: 9px; }
+}
+
+@media (max-width: 380px) {
+  .mobile-advanced-menu { top: 58px; right: 8px; width: calc(100vw - 16px); }
+}
